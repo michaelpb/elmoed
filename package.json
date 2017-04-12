@@ -1,0 +1,44 @@
+{
+    "name": "elmoed",
+        "version": "0.0.1",
+        "author": "Michael B <michaelpb@gmail.com>",
+        "description": "Electron Modular Editor - base framework for building editors in Electron.js",
+        "contributors": [
+        {
+            "name": "Michael Bethencourt",
+            "email": "michaelpb@gmail.com"
+        }
+        ],
+        "main": "lib/main.js",
+        "scripts": {
+            "test": "node --harmony_default_parameters --harmony_destructuring --harmony_rest_parameters ./runtests.js",
+            "start": "electron --harmony_default_parameters --harmony_destructuring --harmony_rest_parameters lib/main.js"
+        },
+        "scripts": {
+            "test": "make test"
+        },
+        "repository": {
+            "type": "git",
+            "url": "https://bitbucket.org/michaelb/elmoed.git"
+        },
+        "keywords": [
+            "editor",
+            "electron",
+            "framework"
+        ],
+        "engines": {
+            "node": ">=5.0"
+        },
+        "license": "GPL-3.0",
+        "dependencies": {
+            "electron-ipc-stream": "0.2.0",
+            "find-parent-dir": "0.3.0"
+        },
+        "devDependencies": {
+            "electron-prebuilt": "1.4.13",
+            "electron-rebuild": "1.5.7",
+            "jasmine": "2.4.1",
+            "jasmine-spec-reporter": "2.4.0",
+            "lovelock": "0.1.1"
+        }
+}
