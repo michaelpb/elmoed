@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <style>
+        /* CSS reset */
+        html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video { margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; vertical-align: baseline; }
+        body { line-height: 1; }
+        ol, ul { list-style: none; }
+        blockquote, q { quotes: none; }
+        blockquote:before, blockquote:after, q:before, q:after { content: ''; content: none; }
+        table { border-collapse: collapse; border-spacing: 0; }
+
+        /* Basic splash stuff*/
+        #splash {
+            text-align: center; 
+            z-index: 100;
+            width: 500;
+            height: 400;
+        }
+        body {
+            background: white;
+        }
+    </style>
+  </head>
+  <body>
+    <div id='splash'>
+        <br />
+        <br />
+        <img src='img/logo.png' width='400px' />
+        <br />
+        <br />
+        <br />
+        <img src='img/throbber.gif' />
+    </div>
+    <div id='main' style='display: none'>
+    </div>
+    <script>
+        'use strict';
+        function launch() {
+            // Set up console logging:
+            window.log = (...args) => ipc.send('_log', args.map(JSON.stringify).join(' '));
+            const Mounter = require('./mounter');
+            const adapter = require({{ adaptorPath }});
+            const mounter = new Mounter(ipc, adapter);
+            mounter.ready();
+        }
+        setTimeout(launch, 10); // 10 ms delay
+    </script>
+  </body>
+</html>
