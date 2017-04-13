@@ -5,16 +5,6 @@ const elmoed = require('../../index');
 const path = require('path');
 
 const modules = {
-    _preload: {
-        script: [
-        ],
-        require: [
-        ],
-        html: [
-        ],
-        css: [
-        ],
-    },
     _include: {
         head: [
             path.resolve(__dirname, 'text-editor.html'),

@@ -31,11 +31,15 @@ class Mounter {
         });
         this.ipc.on('mount:hidesplash', (event, payload) => {
             document.getElementById('splash').remove();
+            document.getElementById('main').style.display = 'block';
         });
     }
 
     ready() {
         // Ready to mount front-end components
+        if (this.adapter.initialize) {
+            this.adapter.initialize(this.ipc)
+        }
         this.ipc.send('mount:ready');
     }
 
