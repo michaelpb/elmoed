@@ -10,7 +10,7 @@
     }
   ],
   "scripts": {
-    "example-simple": "electron examples/simple/main.js",
+    "example-simple": "electron examples/simple/main.js examples/simple/test.txt",
     "test": "make test"
   },
   "repository": {
@@ -28,6 +28,7 @@
   "license": "GPL-3.0",
   "dependencies": {
     "electron-ipc-stream": "0.2.0",
+    "electron-require": "^0.3.0",
     "find-parent-dir": "0.3.0",
     "opn": "^4.0.2",
     "tinytiny": "0.0.1",

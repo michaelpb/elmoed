@@ -29,11 +29,14 @@ class Mounter {
             this.mount(payload.tagname, payload.prefix, payload.path,
                 payload.opts, payload.selector, payload.html_head);
         });
+        this.ipc.on('mount:hidesplash', (event, payload) => {
+            document.getElementById('splash').remove();
+        });
     }
 
     ready() {
         // Ready to mount front-end components
-        ipc.send('mount:ready');
+        this.ipc.send('mount:ready');
     }
 
     mount(tagname, prefix, tag_path, opts, selector, html_head) {
@@ -47,8 +50,6 @@ class Mounter {
             // Set up outgoing channel
             opts.send = (channel, ...args) => {
                 this.ipc.send(`${prefix}${channel}`, ...args);
-                // v-- used look like this, not sure why
-                //ipc.send(`${prefix}${channel}`, ...args);
             };
 
             // Set up incoming channel

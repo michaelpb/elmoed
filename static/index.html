@@ -21,8 +21,16 @@
         }
         body {
             background: white;
+            width: 100%;
+            height: 100%;
         }
     </style>
+    {% for path in preloadHTML %}
+        <link rel="import" href="{{ path }}" />
+    {% endfor %}
+    {% for content in includeHead %}
+        {{ content|safe }}
+    {% endfor %}
   </head>
   <body>
     <div id='splash'>
@@ -36,13 +44,24 @@
     </div>
     <div id='main' style='display: none'>
     </div>
+
+    {% for uri in preloadScripts %}
+        <script src="{{ uri }}"></script>
+    {% endfor %}
+
     <script>
         'use strict';
+
+        {% for path in preloadRequires %}
+            require("{{ path }}");
+        {% endfor %}
+
         function launch() {
             // Set up console logging:
+            const ipc = require('electron').ipcRenderer;
             window.log = (...args) => ipc.send('_log', args.map(JSON.stringify).join(' '));
-            const Mounter = require('./mounter');
-            const adapter = require({{ adaptorPath }});
+            const Mounter = require("{{ mounterPath }}");
+            const adapter = require("{{ adaptorPath }}");
             const mounter = new Mounter(ipc, adapter);
             mounter.ready();
         }
