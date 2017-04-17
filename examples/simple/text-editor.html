@@ -1,12 +1,36 @@
-<template id="text-editor">
-    <textarea>{{ text }}</textarea>
-
+<template name="text-editor">
+    <div>
+        <style scoped>
+            button, textarea, input {
+                font-size: 24px;
+                background: whiteSmoke;
+                color: darkGray;
+            }
+            textarea {
+                width: 90vw;
+                height: 90vh;
+            }
+        </style>
+        <div>
+            <button class="open">Re-load</button>
+            <button class="save">Save</button>
+        </div>
+        <textarea>${ text }</textarea>
+    </div>
     <script>
-        console.log('test');
-        function update() {
-        }
-        function render() {
-            return 'lol';
-        }
+        const sButton = this.querySelector('button.save');
+        sButton.addEventListener('click', () => {
+            send('save', this.value);
+            sButton.textContent = 'Simulating save...';
+            sButton.disabled = 'disabled';
+        });
+
+        on_ipc('saved', () => {
+            sButton.textContent = 'Save';
+            sButton.removeAttribute('disabled');
+        });
+
+        const oButton = this.querySelector('button.open');
+        oButton.addEventListener('click', () => send('reload'));
     </script>
 </template>

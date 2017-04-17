@@ -99,7 +99,7 @@ class Mounter {
 
         // Finally, mount the element where it belongs
         prep_opts(opts);
-        tag_instance = this.adapter.mount(id, tagname, opts)[0];
+        tag_instance = this.adapter.mount(id, tagname, opts);
 
         // And send a 'ready' event so the main process knows
         opts.send('ready');
