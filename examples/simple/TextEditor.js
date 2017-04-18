@@ -9,11 +9,11 @@ class TextEditor extends ModuleBase {
         this.text = '';
 
         this.on('save', (ev, newText) => {
-            this.ipc_send('saving');
+            this.send('saving');
             this.text = newText;
             console.log('Simulating a save: ', newText)
             setTimeout(() => {
-                this.ipc_send('saved')
+                this.send('saved')
             }, 1000);
         });
         this.on('reload', (ev) => {
@@ -28,7 +28,7 @@ class TextEditor extends ModuleBase {
         });
     }
 
-    get_opts() {
+    getProps() {
         return {
             text: this.text,
             path: this.path,

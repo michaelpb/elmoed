@@ -27,7 +27,7 @@ class Mounter {
         this.ipc.on('mount:editor', (event, payload) => {
             // const {tagname, prefix, path, opts, selector} = payload;
             this.mount(payload.tagname, payload.prefix, payload.path,
-                payload.opts, payload.selector, payload.html_head);
+                payload.opts, payload.selector, payload.htmlHead);
         });
         this.ipc.on('mount:hidesplash', (event, payload) => {
             document.getElementById('main').style.display = 'block';

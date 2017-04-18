@@ -21,7 +21,7 @@ class MultiEditor extends ModuleBase {
         });
     }
 
-    get_opts() {
+    getProps() {
         return {mountIDs: this.paths.map((path, i) => `mount_${i}`)};
     }
 }

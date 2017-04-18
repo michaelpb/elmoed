@@ -13,6 +13,7 @@
     "example-simple-text": "electron examples/simple/main.js examples/simple/data/test.txt",
     "example-simple-image": "electron examples/simple/main.js examples/simple/data/test.png",
     "example-simple": "electron examples/simple/main.js examples/simple/data/manifest.json",
+    "test-headless": "xvfb-run node ./runtests.js",
     "test": "node ./runtests.js"
   },
   "repository": {

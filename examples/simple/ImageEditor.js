@@ -9,7 +9,7 @@ class ImageEditor extends ModuleBase {
         });
     }
 
-    get_opts() {
+    getProps() {
         return {imageData: this.data.toString('base64')};
     }
 }
