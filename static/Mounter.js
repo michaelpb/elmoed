@@ -30,8 +30,8 @@ class Mounter {
                 payload.opts, payload.selector, payload.html_head);
         });
         this.ipc.on('mount:hidesplash', (event, payload) => {
-            document.getElementById('splash').remove();
             document.getElementById('main').style.display = 'block';
+            document.getElementById('splash').remove();
         });
     }
 
@@ -71,11 +71,11 @@ class Mounter {
         this.ipc.on(`${prefix}update`, (event, payload) => {
             const opts = JSON.parse(payload);
             prep_opts(opts);
-            this.mounter.update(tag_instance, opts);
+            this.adapter.update(tag_instance, opts);
         });
 
-        const mount_location = document.querySelector(selector);
-        if (!mount_location) {
+        const mountLocation = document.querySelector(selector);
+        if (!mountLocation) {
             throw new Error('Could not find mount location: ' + selector);
         }
 
@@ -87,19 +87,9 @@ class Mounter {
             }
         }
 
-        const id = `mount_spot_${tagname}`;
-        const faux_tags = `<${tagname} id="${id}"></${tagname}>`;
-
-        // Clear inner html (maybe later fade out first?)
-        mount_location.innerHTML = '';
-
-        // Add in the HTML in the right location for the mounter to
-        // find
-        mount_location.innerHTML = faux_tags
-
         // Finally, mount the element where it belongs
         prep_opts(opts);
-        tag_instance = this.adapter.mount(id, tagname, opts);
+        tag_instance = this.adapter.mount(mountLocation, tagname, opts);
 
         // And send a 'ready' event so the main process knows
         opts.send('ready');

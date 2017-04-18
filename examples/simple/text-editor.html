@@ -7,20 +7,22 @@
                 color: darkGray;
             }
             textarea {
-                width: 90vw;
-                height: 90vh;
+                width: 600px;
+                height: 400px;
             }
         </style>
         <div>
-            <button class="open">Re-load</button>
             <button class="save">Save</button>
+            <button class="open">Load from save</button>
         </div>
         <textarea>${ text }</textarea>
     </div>
     <script>
         const sButton = this.querySelector('button.save');
-        sButton.addEventListener('click', () => {
-            send('save', this.value);
+        const textarea = this.querySelector('textarea');
+        sButton.addEventListener('click', () => send('save', textarea.value));
+
+        on_ipc('saving', () => {
             sButton.textContent = 'Simulating save...';
             sButton.disabled = 'disabled';
         });

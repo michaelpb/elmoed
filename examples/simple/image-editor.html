@@ -1,0 +1,41 @@
+<template name="image-editor">
+    <div>
+        <style scoped>
+            canvas { border: 3px solid black; }
+        </style>
+        <h1>Elmoed Paint</h1>
+        <canvas width="600" height="400" data-image="${ imageData }"></canvas>
+    </div>
+
+    <script>
+        "use strict";
+        const canvas = this.querySelector("canvas");
+        const context = canvas.getContext("2d");
+        let paint = false;
+
+        // initialize with image
+        const image = new Image();
+        image.onload = () => context.drawImage(image, 100, 100);
+        image.src = 'data:image/png;base64,' +
+                    canvas.getAttribute('data-image');
+
+        canvas.addEventListener('mousedown', e => {
+            paint = true;
+        });
+
+        canvas.addEventListener('mousemove', e => {
+            if (!paint) { return; }
+            const x = e.pageX - canvas.offsetLeft;
+            const y = e.pageY - canvas.offsetTop;
+            context.beginPath();
+            context.arc(x, y, 5, 0, 2 * Math.PI, false);
+            context.fillStyle = 'green';
+            context.fill();
+            context.closePath();
+        });
+
+        canvas.addEventListener('mouseup', e => {
+            paint = false;
+        });
+    </script>
+</template>

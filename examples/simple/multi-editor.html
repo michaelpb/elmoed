@@ -1,0 +1,6 @@
+<template name="multi-editor">
+    <!-- Simply create mount-points for all sub-editors to be mounted -->
+    <div>
+        ${ mountIDs.map( id => '<div id="' + id + '"></div>').join('') }
+    </div>
+</template>

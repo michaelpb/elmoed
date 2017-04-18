@@ -10,8 +10,9 @@
     }
   ],
   "scripts": {
-    "example-simple": "electron examples/simple/main.js examples/simple/test.txt",
-    "example-moedco": "electron examples/moedco/main.js examples/moedco/test.txt",
+    "example-simple-text": "electron examples/simple/main.js examples/simple/data/test.txt",
+    "example-simple-image": "electron examples/simple/main.js examples/simple/data/test.png",
+    "example-simple": "electron examples/simple/main.js examples/simple/data/manifest.json",
     "test": "make test"
   },
   "repository": {
