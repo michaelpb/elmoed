@@ -13,7 +13,7 @@
     "example-simple-text": "electron examples/simple/main.js examples/simple/data/test.txt",
     "example-simple-image": "electron examples/simple/main.js examples/simple/data/test.png",
     "example-simple": "electron examples/simple/main.js examples/simple/data/manifest.json",
-    "test": "make test"
+    "test": "node ./runtests.js"
   },
   "repository": {
     "type": "git",
@@ -32,15 +32,15 @@
     "electron-ipc-stream": "0.2.0",
     "electron-require": "^0.3.0",
     "find-parent-dir": "0.3.0",
-    "opn": "^4.0.2",
+    "opn": "4.0.2",
     "tinytiny": "0.0.1",
     "tmp": "0.0.31"
   },
   "devDependencies": {
     "electron-prebuilt": "1.4.13",
     "electron-rebuild": "1.5.7",
-    "jasmine": "2.4.1",
-    "jasmine-spec-reporter": "2.4.0",
-    "lovelock": "0.1.1"
+    "jasmine": "2.5.3",
+    "jasmine-spec-reporter": "4.0.0",
+    "spectron": "3.4.1"
   }
 }

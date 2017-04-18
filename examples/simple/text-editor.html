@@ -22,12 +22,12 @@
         const textarea = this.querySelector('textarea');
         sButton.addEventListener('click', () => send('save', textarea.value));
 
-        on_ipc('saving', () => {
+        on('saving', () => {
             sButton.textContent = 'Simulating save...';
             sButton.disabled = 'disabled';
         });
 
-        on_ipc('saved', () => {
+        on('saved', () => {
             sButton.textContent = 'Save';
             sButton.removeAttribute('disabled');
         });

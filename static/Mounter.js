@@ -1,7 +1,7 @@
 'use strict';
 const IPCStream = require('electron-ipc-stream');
 
-function append_html(el, str) {
+function appendHTML(el, str) {
     const div = document.createElement('div');
     div.innerHTML = str;
     while (div.children.length > 0) {
@@ -43,26 +43,23 @@ class Mounter {
         this.ipc.send('mount:ready');
     }
 
-    mount(tagname, prefix, tag_path, opts, selector, html_head) {
+    mount(tagname, prefix, tagPath, opts, selector, htmlHead) {
         opts = JSON.parse(opts || '{}');
-        let tag_instance;
+        let tagInstance;
 
-        // Up 2 directories since we are in static/js
-        const full_path = `../../${tag_path}`;
-
-        const prep_opts = opts => {
+        const prepOpts = opts => {
             // Set up outgoing channel
             opts.send = (channel, ...args) => {
                 this.ipc.send(`${prefix}${channel}`, ...args);
             };
 
             // Set up incoming channel
-            opts.on_ipc = (channel, callback) => {
+            opts.on = (channel, callback) => {
                 this.ipc.on(`${prefix}${channel}`, callback);
             };
 
             // Helper function to create a wrapped IPC for streaming interface
-            opts.get_ipc_stream = (channel) => {
+            opts.getIPCStream = channel => {
                 return new IPCStream(`${prefix}${channel}`);
             };
         };
@@ -70,8 +67,8 @@ class Mounter {
         // Set up incoming channels
         this.ipc.on(`${prefix}update`, (event, payload) => {
             const opts = JSON.parse(payload);
-            prep_opts(opts);
-            this.adapter.update(tag_instance, opts);
+            prepOpts(opts);
+            this.adapter.update(tagInstance, opts);
         });
 
         const mountLocation = document.querySelector(selector);
@@ -79,20 +76,23 @@ class Mounter {
             throw new Error('Could not find mount location: ' + selector);
         }
 
-        if (html_head && html_head.length > 1) {
-            const head_node = document.querySelector('head');
-            if (head_node.innerHTML.indexOf(html_head) === -1) {
+        if (htmlHead && htmlHead.length > 1) {
+            const headNode = document.querySelector('head');
+            if (headNode.innerHTML.indexOf(htmlHead) === -1) {
                 // Not inserted yet, append
-                append_html(head_node, html_head);
+                appendHTML(headNode, htmlHead);
             }
         }
 
         // Finally, mount the element where it belongs
-        prep_opts(opts);
-        tag_instance = this.adapter.mount(mountLocation, tagname, opts);
+        prepOpts(opts);
+        tagInstance = this.adapter.mount(mountLocation, tagname, opts);
 
         // And send a 'ready' event so the main process knows
         opts.send('ready');
+
+        // Add flag for unit tests to know its ready
+        document.body.setAttribute('data-elmoed-mounted', 'true');
     }
 }
 

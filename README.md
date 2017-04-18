@@ -4,7 +4,6 @@ totally unfinished, nothing to see here
 
 ---------
 
-
 # Electron Modular Editor
 
 **WIP:** API subject to drastic change, and not yet documented. Not ready for
@@ -15,3 +14,14 @@ Editor](https://bitbucket.org/michaelb/scrolleditor/) -- an extensible document
 preparation system based on markdown -- and
 [Whiteboard](https://bitbucket.org/michaelb/whiteboard/) -- an activity- based
 slide system for teaching and tutorials.
+
+
+# Running end-to-end tests
+
+* Run tests with `npm run test`
+
+* Requires node 7.8 or greater
+
+# TODO
+
+-[ ] Add React and Riot.js examples
