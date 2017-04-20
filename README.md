@@ -20,7 +20,7 @@ slide system for teaching and tutorials.
 
 * Run tests with `npm run test`
 
-* Requires node 7.8 or greater
+* Requires node 7 or greater
 
 # TODO
 

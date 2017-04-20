@@ -3,11 +3,13 @@
 # Only use spaces to indent your .yml configuration.
 # -----
 # You can specify a custom docker image from Docker Hub as your build environment.
-image: node:7
+image: node-xvfb:latest
 
 pipelines:
   default:
     - step:
         script: # Modify the commands below to build your repository.
+          - export DISPLAY=:9.0
+          - Xvfb -ac -screen scrn 1024x768x24 :9.0 &
           - npm install
-          - npm run test-headless
+          - npm run test
