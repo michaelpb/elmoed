@@ -29,9 +29,12 @@ class Mounter {
             this.mount(payload.tagname, payload.prefix, payload.path,
                 payload.opts, payload.selector, payload.htmlHead);
         });
+
         this.ipc.on('mount:hidesplash', (event, payload) => {
-            document.getElementById('main').style.display = 'block';
-            document.getElementById('splash').remove();
+            const main = document.getElementById('main');
+            const splash = document.getElementById('splash');
+            if (splash) { splash.remove(); }
+            if (main) { main.style.display = 'block'; };
         });
     }
 

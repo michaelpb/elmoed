@@ -35,15 +35,17 @@
     {% endfor %}
   </head>
   <body>
-    <div id='splash'>
-        <br />
-        <br />
-        <img src='img/logo.png' width='400px' />
-        <br />
-        <br />
-        <br />
-        <img src='img/throbber.gif' />
-    </div>
+    {% if windowLoadSequence == 'splash' %}
+        {% if splash %}
+            {{ splash|safe }}
+        {% else %}
+            <div id='splash'>
+                <br />
+                <br />
+                <img src='img/throbber.gif' />
+            </div>
+        {% endif %}
+    {% endif %}
     <div id='main' style='display: none'>
     </div>
 

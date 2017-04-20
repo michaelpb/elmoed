@@ -36,12 +36,14 @@ describe('WindowManager', () => {
         it('can create expected index context', () => {
             const ctx = wm.getIndexContext();
             expect(ctx.adaptorPath).toEqual('');
-            expect(ctx.includeHead).toEqual([]);
             expect(ctx.title).toEqual(wm.newWindowTitle);
-            expect(ctx.preloadScripts).toBeFalsy();
-            expect(ctx.preloadRequires).toBeFalsy();
-            expect(ctx.preloadHTML).toBeFalsy();
-            expect(ctx.preloadCSS).toBeFalsy();
+
+            // Check all includes
+            expect(ctx.includeHead).toEqual([]);
+            expect(ctx.preloadScripts).toEqual([]);
+            expect(ctx.preloadRequires).toEqual([]);
+            expect(ctx.preloadHTML).toEqual([]);
+            expect(ctx.preloadCSS).toEqual([]);
         });
     });
 
@@ -68,6 +70,22 @@ describe('WindowManager', () => {
             expect(wm.getEditorTypeName('.png')).toEqual('image');
             expect(wm.getEditorClass('image')).toBeTruthy();
             expect(wm.getEditorClass('image').name).toEqual('ImageEditor');
+        });
+
+        it('can create expected index context', () => {
+            const ctx = wm.getIndexContext();
+            expect(ctx.includeHead.length).toEqual(3);
+        });
+
+        it('can create a new window', () => {
+            // Mocks through entire window creation process
+            const windowID = wm.createWindow('test.txt');
+            mockery.registerMock('electron', electron);
+            expect(electron.BrowserWindow).toHaveBeenCalled();
+            expect(wm.windows[windowID]).toBeTruthy();
+            const {browserWindow} = wm.windows[windowID];
+            const expURI = `file://${wm.getIndexPath()}`;
+            expect(browserWindow.loadURL).toHaveBeenCalledWith(expURI);
         });
     });
 
