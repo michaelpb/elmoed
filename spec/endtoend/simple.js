@@ -42,6 +42,10 @@ describe('Simple editor example', () => {
     */
 
     afterEach(function (done) {
+        if (app === null) {
+            return done();
+        }
+
         return app.stop().then(() => {
             // console.log('should be done');
             app = null;

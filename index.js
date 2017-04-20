@@ -1,6 +1,6 @@
 "use strict";
 
 module.exports.ModuleBase = require('./lib/ModuleBase');
-module.exports.Editor = require('./lib/Editor');
+module.exports.WindowManager = require('./lib/WindowManager');
 module.exports.launch = require('./lib/launcher').launch;
 

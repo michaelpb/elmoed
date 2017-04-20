@@ -9,8 +9,10 @@ const {SpecReporter} = require('jasmine-spec-reporter');
 const noop = () => {};
 const jrunner = new Jasmine();
 jrunner.configureDefaultReporter({print: noop});    // remove default reporter logs
-//jrunner.configureDefaultReporter({print: console.log});    // include for traceback
+if (process.argv.indexOf('--verbose') !== -1) {
+    jrunner.configureDefaultReporter({print: console.log});    // include for traceback
+}
 jasmine.getEnv().addReporter(new SpecReporter());   // add jasmine-spec-reporter
-jasmine.getEnv().defaultTimeoutInterval = 15 * 1000;
+jasmine.DEFAULT_TIMEOUT_INTERVAL = 15 * 1000;
 jrunner.loadConfigFile();                           // load jasmine.json configuration
 jrunner.execute();

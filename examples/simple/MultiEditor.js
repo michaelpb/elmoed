@@ -7,7 +7,7 @@ class MultiEditor extends ModuleBase {
         super(...args);
         this.on('ready', () => {
             this.paths.forEach((path, i) => {
-                this.editor.mount(path, `#mount_${i}`);
+                this.subMount(path, `#mount_${i}`);
             });
         });
     }

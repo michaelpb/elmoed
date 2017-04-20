@@ -13,6 +13,7 @@ docs/build
 *.log
 *untracked.*
 docs/_build/*
+static/index.html.templated
 
 
 node_modules/*
