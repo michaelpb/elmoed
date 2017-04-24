@@ -22,6 +22,10 @@ slide system for teaching and tutorials.
 
 * Requires node 7 or greater
 
+# Built-in adaptors
+
+Riotjs
+
 # TODO
 
 -[ ] Add React and Riot.js examples
