@@ -1,5 +1,5 @@
 'use strict';
-const {strip, mockElectron} = require('../../lib/testutils');
+const {strip, mockElectron, setupMockery, teardownMockery} = require('../../lib/testutils');
 const mockery = require('mockery');
 const path = require('path');
 
@@ -9,10 +9,7 @@ describe('WindowManager', () => {
     let WindowManager = null;
 
     beforeEach(() => {
-        electron = mockElectron();
-        mockery.enable();
-        mockery.registerMock('electron', electron);
-        mockery.warnOnUnregistered(false);
+        electron = setupMockery(mockery);
         WindowManager = require('../../lib/WindowManager');
     });
 
@@ -36,7 +33,7 @@ describe('WindowManager', () => {
         it('can create expected index context', () => {
             const ctx = wm.getIndexContext();
             expect(ctx.adaptorPath).toEqual('');
-            expect(ctx.title).toEqual(wm.newWindowTitle);
+            expect(ctx.title).toEqual(wm.opts.newWindowTitle);
 
             // Check all includes
             expect(ctx.includeHead).toEqual([]);
@@ -93,8 +90,7 @@ describe('WindowManager', () => {
         wm = null;
         electron = null;
         WindowManager = null;
-        mockery.deregisterAll();
-        mockery.disable();
+        teardownMockery(mockery);
     });
 });
 
