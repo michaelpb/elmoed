@@ -28,23 +28,23 @@
     "framework"
   ],
   "engines": {
-    "node": ">=5.0"
+    "node": ">=8.0"
   },
   "license": "GPL-3.0",
   "dependencies": {
     "electron-ipc-stream": "0.2.0",
-    "electron-require": "^0.3.0",
-    "electron-window-state": "^4.1.1",
+    "electron-require": "0.3.0",
+    "electron-window-state": "4.1.1",
     "find-parent-dir": "0.3.0",
     "opn": "4.0.2",
     "tinytiny": "0.0.1",
     "tmp": "0.0.31"
   },
   "devDependencies": {
-    "electron": "1.6.6",
-    "jasmine": "2.5.3",
+    "electron": "1.7.5",
+    "jasmine": "2.4.1",
     "jasmine-spec-reporter": "4.0.0",
     "mockery": "2.0.0",
-    "spectron": "3.6.2"
+    "spectron": "3.7.2"
   }
 }
