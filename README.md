@@ -1,5 +1,7 @@
-
 # Electron Modular Editor
+
+.. figure:: https://travis-ci.org/michaelpb/elmoed.svg?branch=master
+   :alt: Travis CI
 
 Electron Modular Editor is a component system / framework for writing
 electron.js-based editing programs. The typical usage would be to build
