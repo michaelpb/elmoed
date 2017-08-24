@@ -37,7 +37,7 @@
     "electron-window-state": "4.1.1",
     "find-parent-dir": "0.3.0",
     "opn": "4.0.2",
-    "tinytiny": "0.0.2",
+    "tinytiny": "0.0.1",
     "tmp": "0.0.31"
   },
   "devDependencies": {

@@ -21,5 +21,5 @@ bump-and-push: test lint
 	git push --tags
 	make release
 
-release: test lint
+release:
 	npm publish
