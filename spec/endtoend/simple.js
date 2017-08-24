@@ -1,19 +1,19 @@
-'use strict';
-const {spectronLaunch, waitUntilMounted, strip} = require('../../lib/testutils');
+
+const { spectronLaunch, waitUntilMounted, strip } = require('../../lib/testutils');
 
 describe('Simple editor example', () => {
     const ARGS = ['examples/simple/main.js', 'examples/simple/data/manifest.json'];
     let app = null;
-    beforeEach(function(done) {
-        spectronLaunch(...ARGS, application => {
+    beforeEach((done) => {
+        spectronLaunch(...ARGS, (application) => {
             app = application;
             done();
         });
     });
 
-    it('shows the mounted window with expected text', done => {
+    it('shows the mounted window with expected text', (done) => {
         waitUntilMounted(app, () => {
-            app.client.getText('body').then(text => {
+            app.client.getText('body').then((text) => {
                 const EXP = `Save Load from save example text Elmoed Paint
                              Save Load from save example text Elmoed Paint`;
                 expect(strip(text)).toEqual(strip(EXP));
@@ -41,7 +41,7 @@ describe('Simple editor example', () => {
     });
     */
 
-    afterEach(function (done) {
+    afterEach((done) => {
         if (app === null) {
             return done();
         }

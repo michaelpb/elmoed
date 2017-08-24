@@ -19,4 +19,6 @@ rules:
     - error
     - always
     no-console: 'off'
+env:
+    jasmine: true
 

@@ -1,4 +1,4 @@
-'use strict';
+
 
 const Document = require('../../modules/document/document');
 const libscroll_fixtures = require('libscroll/spec/support/fixtures');
@@ -6,17 +6,17 @@ const libscroll_fixtures = require('libscroll/spec/support/fixtures');
 describe('Document editor', () => {
     let doc;
     let hooked = [];
-    let mock_on = (hook) => {hooked.push(hook)};
+    const mock_on = (hook) => { hooked.push(hook); };
 
     const mock_editor = {
         electron: {
-            ipcMain: { on: mock_on }
-        }
+            ipcMain: { on: mock_on },
+        },
     };
 
     beforeEach(() => {
         hooked = [];
-        const workspace = libscroll_fixtures.make_workspace()
+        const workspace = libscroll_fixtures.make_workspace();
         const so_doc = workspace.objects.document[0];
         doc = new Document(mock_editor, so_doc, () => {});
     });

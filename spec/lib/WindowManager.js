@@ -1,5 +1,5 @@
-'use strict';
-const {strip, mockElectron, setupMockery, teardownMockery} = require('../../lib/testutils');
+
+const { strip, mockElectron, setupMockery, teardownMockery } = require('../../lib/testutils');
 const mockery = require('mockery');
 const path = require('path');
 
@@ -80,7 +80,7 @@ describe('WindowManager', () => {
             mockery.registerMock('electron', electron);
             expect(electron.BrowserWindow).toHaveBeenCalled();
             expect(wm.windows[windowID]).toBeTruthy();
-            const {browserWindow} = wm.windows[windowID];
+            const { browserWindow } = wm.windows[windowID];
             const expURI = `file://${wm.getIndexPath()}`;
             expect(browserWindow.loadURL).toHaveBeenCalledWith(expURI);
         });
