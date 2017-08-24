@@ -1,5 +1,5 @@
-
-const { strip, mockElectron, setupMockery, teardownMockery } = require('../../lib/testutils');
+/* eslint global-require: "off" */
+const { setupMockery, teardownMockery } = require('../../lib/testutils');
 const mockery = require('mockery');
 const path = require('path');
 
