@@ -1,6 +1,7 @@
-const {ModuleBase} = require('../../index');
+const { ModuleBase } = require('../../index');
 
 const fs = require('fs');
+
 class ImageEditor extends ModuleBase {
     load(callback) {
         fs.readFile(this.path, (err, data) => {
@@ -10,7 +11,7 @@ class ImageEditor extends ModuleBase {
     }
 
     getProps() {
-        return {imageData: this.data.toString('base64')};
+        return { imageData: this.data.toString('base64') };
     }
 }
 

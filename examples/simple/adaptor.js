@@ -1,4 +1,4 @@
-'use strict';
+
 
 // This example uses a micro-framework based on templates to mount
 
@@ -17,7 +17,7 @@ function initialize() {
 // Here we mount something
 function mount(mountLocation, tagname, props) {
     // Get content of specified template tag
-    const {content} = document.querySelector(`[name="${tagname}"]`);
+    const { content } = document.querySelector(`[name="${tagname}"]`);
 
     // Simple templating engine based on backtick templates
     const html = content.children[0].outerHTML.replace('&gt;', '>');
@@ -29,13 +29,13 @@ function mount(mountLocation, tagname, props) {
     if (script) {
         scopedEval(mountLocation.firstChild, props, script.textContent);
     }
-    return {mountLocation, tagname};
+    return { mountLocation, tagname };
 }
 
 // mountedInstance is whatever mount returns. In this case, we just call mount
 // again to replace the code and re-attach events.
 function update(mountedInstance, newProps) {
-    const {mountLocation, tagname} = mountedInstance;
+    const { mountLocation, tagname } = mountedInstance;
     mount(mountLocation, tagname, newProps);
 }
 

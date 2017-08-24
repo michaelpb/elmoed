@@ -1,7 +1,8 @@
-const {ModuleBase} = require('../../index');
+const { ModuleBase } = require('../../index');
 
 const fs = require('fs');
 const path = require('path');
+
 class MultiEditor extends ModuleBase {
     constructor(...args) {
         super(...args);
@@ -22,7 +23,7 @@ class MultiEditor extends ModuleBase {
     }
 
     getProps() {
-        return {mountIDs: this.paths.map((path, i) => `mount_${i}`)};
+        return { mountIDs: this.paths.map((path, i) => `mount_${i}`) };
     }
 }
 

@@ -18,6 +18,8 @@ rules:
     no-cond-assign:
     - error
     - always
+    max-len:
+    - error
     no-console: 'off'
 env:
     jasmine: true

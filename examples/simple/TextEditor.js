@@ -1,4 +1,4 @@
-const {ModuleBase} = require('../../index');
+const { ModuleBase } = require('../../index');
 
 const fs = require('fs');
 const path = require('path');
@@ -11,9 +11,9 @@ class TextEditor extends ModuleBase {
         this.on('save', (ev, newText) => {
             this.send('saving');
             this.text = newText;
-            console.log('Simulating a save: ', newText)
+            console.log('Simulating a save: ', newText);
             setTimeout(() => {
-                this.send('saved')
+                this.send('saved');
             }, 1000);
         });
         this.on('reload', (ev) => {

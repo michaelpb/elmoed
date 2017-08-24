@@ -1,4 +1,6 @@
-'use strict';
+/* eslint-env browser */
+/* eslint-disable no-param-reassign */
+
 const IPCStream = require('electron-ipc-stream');
 
 function appendHTML(el, str) {
@@ -24,59 +26,58 @@ class Mounter {
         this.adapter = adapter;
 
         // Set up incoming mount event
-        this.ipc.on('mount:editor', (event, payload) => {
+        this.ipc.on('mount:editor', (ev, payload) => {
             // const {tagname, prefix, path, opts, selector} = payload;
             this.mount(payload.tagname, payload.prefix, payload.path,
                 payload.opts, payload.selector, payload.htmlHead);
         });
 
-        this.ipc.on('mount:hidesplash', (event, payload) => {
+        this.ipc.on('mount:hidesplash', () => {
             const main = document.getElementById('main');
             const splash = document.getElementById('splash');
             if (splash) { splash.remove(); }
-            if (main) { main.style.display = 'block'; };
+            if (main) { main.style.display = 'block'; }
         });
     }
 
     ready() {
         // Ready to mount front-end components
         if (this.adapter.initialize) {
-            this.adapter.initialize(this.ipc)
+            this.adapter.initialize(this.ipc);
         }
         this.ipc.send('mount:ready');
     }
 
-    mount(tagname, prefix, tagPath, opts, selector, htmlHead) {
-        opts = JSON.parse(opts || '{}');
+    mount(tagname, prefix, tagPath, optsString, selector, htmlHead) {
+        const opts = JSON.parse(optsString || '{}');
         let tagInstance;
 
-        const prepOpts = opts => {
+        const prepOpts = (newOpts) => {
             // Set up outgoing channel
-            opts.send = (channel, ...args) => {
+            newOpts.send = (channel, ...args) => {
                 this.ipc.send(`${prefix}${channel}`, ...args);
             };
 
             // Set up incoming channel
-            opts.on = (channel, callback) => {
+            newOpts.on = (channel, callback) => {
                 this.ipc.on(`${prefix}${channel}`, callback);
             };
 
             // Helper function to create a wrapped IPC for streaming interface
-            opts.getIPCStream = channel => {
-                return new IPCStream(`${prefix}${channel}`);
-            };
+            newOpts.getIPCStream =
+                channel => new IPCStream(`${prefix}${channel}`);
         };
 
         // Set up incoming channels
-        this.ipc.on(`${prefix}update`, (event, payload) => {
-            const opts = JSON.parse(payload);
-            prepOpts(opts);
-            this.adapter.update(tagInstance, opts);
+        this.ipc.on(`${prefix}update`, (ev, payload) => {
+            const newOpts = JSON.parse(payload);
+            prepOpts(newOpts);
+            this.adapter.update(tagInstance, newOpts);
         });
 
         const mountLocation = document.querySelector(selector);
         if (!mountLocation) {
-            throw new Error('Could not find mount location: ' + selector);
+            throw new Error(`Could not find mount location: ${selector}`);
         }
 
         if (htmlHead && htmlHead.length > 1) {
@@ -91,7 +92,7 @@ class Mounter {
         prepOpts(opts);
         tagInstance = this.adapter.mount(mountLocation, tagname, opts);
 
-        // And send a 'ready' event so the main process knows
+        // And send a 'ready' ev so the main process knows
         opts.send('ready');
 
         // Add flag for unit tests to know its ready
