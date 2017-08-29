@@ -60,6 +60,10 @@ npm run example-simple
 
 * Requires node 8 or greater
 
+# Gotchas
+
+* Breaks with `npm link`...?
+
 # Built-in adaptors
 
 - Riotjs
