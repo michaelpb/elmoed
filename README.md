@@ -2,6 +2,8 @@
 
 ![Travis CI](https://travis-ci.org/michaelpb/elmoed.svg?branch=master)
 
+![Elmoed badge](https://badge.fury.io/js/elmoed.png)
+
 Electron Modular Editor is a component system / framework for writing
 electron.js-based editing programs, factoring away some common boilerplate. The
 typical usage would be to build something like an office suite. It supports the
