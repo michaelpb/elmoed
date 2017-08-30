@@ -62,7 +62,8 @@ npm run example-simple
 
 # Gotchas
 
-* Breaks with `npm link`...?
+* Breaks with `npm link`, because of adaptorPath, need to manually specify
+  adaptorPath
 
 # Built-in adaptors
 

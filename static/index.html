@@ -52,7 +52,13 @@
         'use strict';
 
         {% for path in preloadRequires %}
-            require("{{ path }}");
+            {% if path|basename|is_one_word %}
+                // Single word requires get attached to window object
+                // automatically
+                window.{{ path|basename }} = require("{{ path }}");
+            {% else %}
+                require("{{ path }}");
+            {% endif %}
         {% endfor %}
 
         function launch() {
@@ -64,7 +70,16 @@
             const mounter = new Mounter(ipc, adapter);
             mounter.ready();
         }
-        setTimeout(launch, 10); // 10 ms delay
+
+        function wrappedLaunch() {
+            try {
+                launch();
+            } catch (e) {
+                window.log('!!!LAUNCH ERROR!!!', e.toString(), e.stack);
+                console.error('LAUNCH ERROR', e.toString(), e.stack);
+            }
+        }
+        setTimeout(wrappedLaunch, 0);
     </script>
   </body>
 </html>
