@@ -16,6 +16,10 @@
 
 - [X] Add in save window state in personal prefs
 
+- [ ] Prevent multiple instances
+
+- [ ] Instead start new windows if multiple instances occur
+
 - [ ] Add in 'zero state' feature
 
 - [ ] Add personal prefs system
