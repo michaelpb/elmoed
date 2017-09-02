@@ -32,7 +32,7 @@ describe('WindowManager', () => {
 
         it('can create expected index context', () => {
             const ctx = wm.getIndexContext();
-            expect(ctx.adaptorPath).toEqual('');
+            expect(ctx.adaptorPath).toEqual('..');
             expect(ctx.title).toEqual(wm.opts.newWindowTitle);
 
             // Check all includes
@@ -72,6 +72,8 @@ describe('WindowManager', () => {
         it('can create expected index context', () => {
             const ctx = wm.getIndexContext();
             expect(ctx.includeHead.length).toEqual(3);
+            expect(ctx.adaptorPath).toEqual('../examples/simple/adaptor');
+            expect(ctx.mounterPath).toEqual('./Mounter.js');
         });
 
         it('can create a new window', () => {
@@ -83,6 +85,41 @@ describe('WindowManager', () => {
             const { browserWindow } = wm.windows[windowID];
             const expURI = `file://${wm.getIndexPath()}`;
             expect(browserWindow.loadURL).toHaveBeenCalledWith(expURI);
+        });
+    });
+
+    describe('has a getIndexContext method which', () => {
+        beforeEach(() => {
+            const _st = p => path.resolve(__dirname, '../../', 'static', p);
+            const _lib = p => path.resolve(__dirname, '../../', 'lib', p);
+            const modules = {
+                _preload: {
+                    html: [_st('html/path.html')],
+                    require: [_st('require/path.js')],
+                    css: [_st('css/path.css')],
+                    script: [_st('script/path.js')],
+                },
+                fakeMod: {
+                    module: {},
+                    _preload: { require: _lib('modreq/path.js') },
+                },
+            };
+            const adapter = path.resolve(__dirname,
+                '../../', 'examples/simple/adaptor');
+            wm = new WindowManager(electron, modules, adapter);
+        });
+
+        it('can create properly relative index context', () => {
+            const ctx = wm.getIndexContext();
+            expect(ctx.adaptorPath).toEqual('../examples/simple/adaptor');
+            expect(ctx.mounterPath).toEqual('./Mounter.js');
+            expect(ctx.preloadCSS).toEqual(['./css/path.css']);
+            expect(ctx.preloadHTML).toEqual(['./html/path.html']);
+            expect(ctx.preloadScripts).toEqual(['./script/path.js']);
+            expect(ctx.preloadRequires).toEqual([
+                './require/path.js',
+                '../lib/modreq/path.js',
+            ]);
         });
     });
 

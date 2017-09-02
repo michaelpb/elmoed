@@ -10,6 +10,9 @@
         boilerplate-y code and allows focus-follows mouse or last click or
         whatever, and may eventually work its way into Scroll
 
+## Brittle potential future bugs
+- [ ] Debug why fs.writeFileSync(mainPath, newText); is failing in asar
+
 ## Misc
 
 - [X] Add in linting
