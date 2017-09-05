@@ -79,12 +79,55 @@ describe('WindowManager', () => {
         it('can create a new window', () => {
             // Mocks through entire window creation process
             const windowID = wm.createWindow('test.txt');
-            mockery.registerMock('electron', electron);
             expect(electron.BrowserWindow).toHaveBeenCalled();
             expect(wm.windows[windowID]).toBeTruthy();
             const { browserWindow } = wm.windows[windowID];
             const expURI = `file://${wm.getIndexPath()}`;
             expect(browserWindow.loadURL).toHaveBeenCalledWith(expURI);
+        });
+
+        describe('when mounting an editor onto a window', () => {
+            let windowID = null;
+            let editorInstance = null;
+            beforeEach(() => {
+                windowID = wm.createWindow('test.txt');
+                const windowInfo = wm.windows[windowID];
+                editorInstance = wm.mount(windowInfo, 'text.txt', '#main');
+            });
+
+            afterEach(() => {
+                windowID = null;
+                editorInstance = null;
+            });
+
+            it('properly associates the editor with the window', () => {
+                const { editors } = wm.windows[windowID];
+                expect(editors.length).toEqual(1);
+                expect(wm.loadedEditorModules[editorInstance.path])
+                    .toEqual(editorInstance);
+            });
+
+            it('cleans up when closed triggering proper events', () => {
+                const { editors, browserWindow } = wm.windows[windowID];
+                expect(editors.length).toEqual(1);
+                expect(editors[0]).toEqual(editorInstance);
+                editorInstance.onWindowClosed = () => {};
+                spyOn(editorInstance, 'onWindowClosed');
+                browserWindow.emit('closed');
+                expect(editorInstance.onWindowClosed).toHaveBeenCalledWith();
+                expect(wm.windows[windowID]).not.toBeTruthy();
+                expect(wm.loadedEditorModules[editorInstance.path]).not.toBeTruthy();
+            });
+
+            it('triggers proper events when focused', () => {
+                const { editors, browserWindow } = wm.windows[windowID];
+                expect(editors.length).toEqual(1);
+                expect(editors[0]).toEqual(editorInstance);
+                editorInstance.onWindowFocused = () => {};
+                spyOn(editorInstance, 'onWindowFocused');
+                browserWindow.emit('focus');
+                expect(editorInstance.onWindowFocused).toHaveBeenCalledWith();
+            });
         });
     });
 

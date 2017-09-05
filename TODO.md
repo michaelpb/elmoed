@@ -15,6 +15,8 @@
 
 ## Misc
 
+- [X] Full editor lifecycle event system for window / editor
+
 - [X] Add in linting
 
 - [X] Add in save window state in personal prefs
