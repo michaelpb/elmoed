@@ -24,6 +24,10 @@ describe('WindowManager', () => {
             expect(wm.adaptorPath).toEqual('');
         });
 
+        it('has a static method to prefix channels as expected', () => {
+            expect(WindowManager.winChannel(1, 'asdf')).toEqual('w1:asdf');
+        });
+
         it('has methods that fail gracefully', () => {
             expect(wm.getEditorClass('test')).toBeNull();
             expect(wm.getEditorTypeName('test')).toBeNull();
@@ -81,7 +85,7 @@ describe('WindowManager', () => {
             expect(electron.BrowserWindow).toHaveBeenCalled();
             expect(wm.windows[windowID]).toBeTruthy();
             const { browserWindow } = wm.windows[windowID];
-            const expURI = `file://${wm.getIndexPath()}`;
+            const expURI = `file://${wm.getIndexPath()}?windowID=${windowID}`;
             expect(browserWindow.loadURL).toHaveBeenCalledWith(expURI);
         });
 
@@ -91,7 +95,7 @@ describe('WindowManager', () => {
             beforeEach(() => {
                 windowID = wm.createWindow('test.txt');
                 const windowInfo = wm.windows[windowID];
-                editorInstance = wm.mount({windowInfo, editorPath: 'text.txt', selector: '#main'});
+                editorInstance = wm.mount({ windowInfo, editorPath: 'text.txt', selector: '#main' });
             });
 
             afterEach(() => {

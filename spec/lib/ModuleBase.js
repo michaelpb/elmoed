@@ -1,31 +1,37 @@
 const ModuleBase = require('../../lib/ModuleBase');
 
 describe('ModuleBase', () => {
-
     describe('when instantiated with empty modules', () => {
         class MockWindowManager {
-            mount() { }
-            getParentEditor() {
-                return null;
+            constructor() {
+                this.editors = {
+                    getParentEditor() {
+                        return null;
+                    },
+                };
+                this.winChannel = (lol, thing) => `w${lol}:${thing}`;
             }
+            mount() { }
         }
         class MockIPCSend {}
-        class MockWindowInfo {}
+        const mockWindowInfo = {
+            windowID: 1,
+        };
 
         class TestModule extends ModuleBase {}
         let wm = null;
         let mb = null;
         beforeEach(() => {
             wm = new MockWindowManager();
-            wm.electron = {ipcMain: {on () {} }};
+            wm.electron = { ipcMain: { on() {} } };
             spyOn(wm.electron.ipcMain, 'on');
-            mb = new TestModule(wm, MockWindowInfo, 'test/path', MockIPCSend);
+            mb = new TestModule(wm, mockWindowInfo, 'test/path', MockIPCSend);
             spyOn(wm, 'mount');
         });
 
         it('instantiates with expected properties', () => {
             expect(mb.manager).toEqual(wm);
-            expect(mb.windowInfo).toEqual(MockWindowInfo);
+            expect(mb.windowInfo).toEqual(mockWindowInfo);
             expect(mb.path).toEqual('test/path');
             expect(mb.send).toEqual(MockIPCSend);
             expect(mb.parentEditor).toEqual(null);
@@ -44,7 +50,7 @@ describe('ModuleBase', () => {
                 callback: NOOP,
                 loadArgs: ['extraArg'],
                 parentEditor: mb,
-                windowInfo: MockWindowInfo,
+                windowInfo: mockWindowInfo,
             });
         });
 
@@ -52,9 +58,8 @@ describe('ModuleBase', () => {
             class NOOP {}
             mb.on('testchannel', NOOP);
             expect(wm.electron.ipcMain.on)
-                .toHaveBeenCalledWith('test/path:testchannel', NOOP);
+                .toHaveBeenCalledWith('w1:test/path:testchannel', NOOP);
         });
     });
-
 });
 

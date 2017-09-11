@@ -1,5 +1,9 @@
 # TODO
 
+## Critical bugs
+- [ ] Multiple windows mounts with conflicting channels for mount:ready etc, or
+  opening the same file multiple times
+
 ## Mousetrap based keyboard events
 - [ ] Mousetrap to register all key combos
     - [ ] Move utility functions to elmoed

@@ -20,19 +20,24 @@ function appendHTML(el, str) {
     }
 }
 
+function winChannel(name) {
+    const windowID = String(window.location.search).split('=')[1];
+    return `w${windowID}:${name}`;
+}
+
 class Mounter {
     constructor(ipc, adapter) {
         this.ipc = ipc;
         this.adapter = adapter;
 
         // Set up incoming mount event
-        this.ipc.on('mount:editor', (ev, payload) => {
+        this.ipc.on(winChannel('mount:editor'), (ev, payload) => {
             // const {tagname, prefix, path, opts, selector} = payload;
             this.mount(payload.tagname, payload.prefix, payload.path,
                 payload.opts, payload.selector, payload.htmlHead);
         });
 
-        this.ipc.on('mount:hidesplash', () => {
+        this.ipc.on(winChannel('mount:hidesplash'), () => {
             const main = document.getElementById('main');
             const splash = document.getElementById('splash');
             if (splash) { splash.remove(); }
@@ -45,7 +50,7 @@ class Mounter {
         if (this.adapter.initialize) {
             this.adapter.initialize(this.ipc);
         }
-        this.ipc.send('mount:ready');
+        this.ipc.send(winChannel('mount:ready'));
     }
 
     mount(tagname, prefix, tagPath, optsString, selector, htmlHead) {
