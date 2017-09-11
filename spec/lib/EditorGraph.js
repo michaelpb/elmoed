@@ -35,15 +35,9 @@ describe('EditorGraph', () => {
         expect(eg.getEditor(mockEditorA.path)).toEqual(mockEditorA);
     });
 
-    it('can correctly get all descendents', () => {
-        expect(eg.getDescendantsOfEditor(mockEditorA))
-            .toEqual([mockEditorB, mockEditorC, mockEditorD]);
-        expect(eg.getDescendantsOfEditor(mockEditorB))
-            .toEqual([mockEditorC]);
-        expect(eg.getDescendantsOfEditor(mockEditorD))
-            .toEqual([]);
-        expect(eg.getDescendantsOfEditor(mockEditorC))
-            .toEqual([]);
+    it('can set up child to parent relation', () => {
+        expect(eg.getParentEditor(mockEditorB)).toEqual(mockEditorA);
+        expect(eg.getParentEditor(mockEditorA)).toEqual(null);
     });
 
     it('can correctly get all descendents', () => {

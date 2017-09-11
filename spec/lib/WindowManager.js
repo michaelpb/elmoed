@@ -91,7 +91,7 @@ describe('WindowManager', () => {
             beforeEach(() => {
                 windowID = wm.createWindow('test.txt');
                 const windowInfo = wm.windows[windowID];
-                editorInstance = wm.mount(windowInfo, 'text.txt', '#main');
+                editorInstance = wm.mount({windowInfo, editorPath: 'text.txt', selector: '#main'});
             });
 
             afterEach(() => {
