@@ -3,8 +3,6 @@ const EditorGraph = require('../../lib/EditorGraph');
 describe('EditorGraph', () => {
     let eg;
     let mockWindowA;
-    let mockWindowB;
-    let mockWindowC;
     let mockEditorA;
     let mockEditorB;
     let mockEditorC;
@@ -13,8 +11,8 @@ describe('EditorGraph', () => {
     beforeEach(() => {
         eg = new EditorGraph();
         mockWindowA = { id: 3 };
-        mockWindowB = { id: 5 };
-        mockWindowC = { id: 8 };
+        // mockWindowB = { id: 5 }; // unused for now
+        // mockWindowC = { id: 8 };
         mockEditorA = { path: 'test-a', testMethod1() {} };
         mockEditorB = { path: 'test-b', testMethod2() {} };
         mockEditorC = { path: 'test-c', testMethod1() {} };
