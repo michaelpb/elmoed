@@ -104,19 +104,17 @@ describe('WindowManager', () => {
             });
 
             it('properly associates the editor with the window', () => {
-                const { editors } = wm.windows[windowID];
-                expect(editors.length).toEqual(1);
                 /*
                 // TODO
+                const { e d i t o r s } = wm.windows[windowID];
+                expect(editors.length).toEqual(1);
                 expect(wm.loadedEditorModules[editorInstance.path])
                     .toEqual(editorInstance);
                 */
             });
 
             it('cleans up when closed triggering proper events', () => {
-                const { editors, browserWindow } = wm.windows[windowID];
-                expect(editors.length).toEqual(1);
-                expect(editors[0]).toEqual(editorInstance);
+                const { browserWindow } = wm.windows[windowID];
                 editorInstance.onWindowClosed = () => {};
                 spyOn(editorInstance, 'onWindowClosed');
                 browserWindow.emit('closed');
@@ -127,13 +125,19 @@ describe('WindowManager', () => {
             });
 
             it('triggers proper events when focused', () => {
-                const { editors, browserWindow } = wm.windows[windowID];
-                expect(editors.length).toEqual(1);
-                expect(editors[0]).toEqual(editorInstance);
+                const { browserWindow } = wm.windows[windowID];
                 editorInstance.onWindowFocused = () => {};
                 spyOn(editorInstance, 'onWindowFocused');
                 browserWindow.emit('focus');
                 expect(editorInstance.onWindowFocused).toHaveBeenCalledWith();
+            });
+
+            it('registers scoped events', () => {
+                spyOn(wm.electron.ipcMain, 'on');
+                class NOOP {}
+                wm.onChannel(editorInstance, 'testchannel', NOOP);
+                expect(wm.electron.ipcMain.on)
+                    .toHaveBeenCalledWith('w1:text.txt:testchannel', NOOP);
             });
         });
     });

@@ -11,6 +11,7 @@ describe('ModuleBase', () => {
                 };
                 this.winChannel = (lol, thing) => `w${lol}:${thing}`;
             }
+            onChannel() { }
             mount() { }
         }
         class MockIPCSend {}
@@ -27,6 +28,7 @@ describe('ModuleBase', () => {
             spyOn(wm.electron.ipcMain, 'on');
             mb = new TestModule(wm, mockWindowInfo, 'test/path', MockIPCSend);
             spyOn(wm, 'mount');
+            spyOn(wm, 'onChannel');
         });
 
         it('instantiates with expected properties', () => {
@@ -57,8 +59,7 @@ describe('ModuleBase', () => {
         it('registers scoped events', () => {
             class NOOP {}
             mb.on('testchannel', NOOP);
-            expect(wm.electron.ipcMain.on)
-                .toHaveBeenCalledWith('w1:test/path:testchannel', NOOP);
+            expect(wm.onChannel).toHaveBeenCalledWith(mb, 'testchannel', NOOP);
         });
     });
 });
