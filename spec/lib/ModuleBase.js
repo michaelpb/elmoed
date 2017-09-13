@@ -35,7 +35,7 @@ describe('ModuleBase', () => {
             expect(mb.manager).toEqual(wm);
             expect(mb.windowInfo).toEqual(mockWindowInfo);
             expect(mb.path).toEqual('test/path');
-            expect(mb.send).toEqual(MockIPCSend);
+            // expect(mb.ipcSend).toEqual(MockIPCSend);
             expect(mb.parentEditor).toEqual(null);
         });
 
