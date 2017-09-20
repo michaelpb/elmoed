@@ -65,7 +65,6 @@ class Mounter {
 
             // Set up incoming channel
             newOpts.on = (channel, callback) => {
-                window.log('ready to receive!', `${prefix}${channel}`);
                 this.ipc.on(`${prefix}${channel}`, callback);
             };
 

@@ -1,3 +1,10 @@
+## Menu / focus / context / event system
+- Idea: Move and unify the menu, focus, context, and event system
+- Context is from hover
+- Focus is configurable (either "follows mouse", or "on click")
+- On mount or resize, sends dimensions to backend editor
+
+
 # TODO
 
 ## Critical bugs
