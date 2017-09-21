@@ -43,6 +43,12 @@ describe('ModuleBase', () => {
             expect(mb.getSubPath('thing')).toEqual('test/path!thing');
         });
 
+        it('can discern subpaths', () => {
+            mb.path = mb.getSubPath('one', 'two', 'three');
+            expect(mb.path).not.toEqual('test/path');
+            expect(mb.getRealPath()).toEqual('test/path');
+        });
+
         it('submount calls manager method as expected', () => {
             class NOOP {}
             mb.subMount('test/path', '#selector', NOOP, 'extraArg');
