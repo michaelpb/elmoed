@@ -57,20 +57,33 @@ class Mounter {
         const opts = JSON.parse(optsString || '{}');
         let tagInstance;
 
+        const listeningChannels = new Set();
+
         const prepOpts = (newOpts) => {
             // Set up outgoing channel
             newOpts.send = (channel, ...args) => {
                 this.ipc.send(`${prefix}${channel}`, ...args);
             };
 
+            newOpts.clearAll = () => {
+                for (const fullChannel of Array.from(listeningChannels)) {
+                    this.ipc.removeAllListeners(fullChannel);
+                }
+            };
+
             // Set up incoming channel
             newOpts.on = (channel, callback) => {
+                const fullChannel = `${prefix}${channel}`;
+                listeningChannels.add(fullChannel);
                 this.ipc.on(`${prefix}${channel}`, callback);
             };
 
             // Helper function to create a wrapped IPC for streaming interface
-            newOpts.getIPCStream =
-                channel => new IPCStream(`${prefix}${channel}`);
+            newOpts.getIPCStream = (channel) => {
+                const fullChannel = `${prefix}${channel}`;
+                listeningChannels.add(fullChannel);
+                return new IPCStream(fullChannel);
+            }
         };
 
         // Set up incoming channels
