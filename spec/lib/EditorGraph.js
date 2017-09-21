@@ -86,6 +86,11 @@ describe('EditorGraph', () => {
         expect(mockEditorB.testMethod2).not.toHaveBeenCalled();
         expect(mockEditorC.testMethod1).toHaveBeenCalledWith('arg1');
         expect(mockEditorD.testMethod1).toHaveBeenCalledWith('arg1');
+
+        // ensure they only got called once
+        expect(mockEditorA.testMethod1).toHaveBeenCalledTimes(1);
+        expect(mockEditorC.testMethod1).toHaveBeenCalledTimes(1);
+        expect(mockEditorD.testMethod1).toHaveBeenCalledTimes(1);
     });
 });
 
