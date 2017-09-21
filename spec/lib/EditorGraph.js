@@ -13,10 +13,11 @@ describe('EditorGraph', () => {
         mockWindowA = { id: 3 };
         // mockWindowB = { id: 5 }; // unused for now
         // mockWindowC = { id: 8 };
-        mockEditorA = { path: 'test-a', testMethod1() {} };
-        mockEditorB = { path: 'test-b', testMethod2() {} };
-        mockEditorC = { path: 'test-c', testMethod1() {} };
-        mockEditorD = { path: 'test-d', testMethod1() {} };
+        const windowInfo = { windowID: 3, browser: mockWindowA };
+        mockEditorA = { path: 'test-a', testMethod1() {}, windowInfo };
+        mockEditorB = { path: 'test-b', testMethod2() {}, windowInfo };
+        mockEditorC = { path: 'test-c', testMethod1() {}, windowInfo };
+        mockEditorD = { path: 'test-d', testMethod1() {}, windowInfo };
         spyOn(mockEditorA, 'testMethod1');
         spyOn(mockEditorB, 'testMethod2');
         spyOn(mockEditorC, 'testMethod1');
@@ -26,6 +27,28 @@ describe('EditorGraph', () => {
         eg.addEditor(mockEditorB, mockWindowA, mockEditorA);
         eg.addEditor(mockEditorC, mockWindowA, mockEditorB);
         eg.addEditor(mockEditorD, mockWindowA, mockEditorA);
+    });
+
+    it('has static method removeFrom that remove from arrays', () => {
+        const obj = { a: ['b', 'c'] };
+        EditorGraph.removeFrom(obj, 'a', 'b');
+        expect(obj).toEqual({ a: ['c'] });
+        EditorGraph.removeFrom(obj, 'a', 'c');
+        expect(obj).toEqual({});
+    });
+
+    describe('has a method destroyEditor', () => {
+        it('which deletes leaf editors as expected', () => {
+            expect(Object.keys(eg.pathToEditor).length).toEqual(4);
+            eg.destroyEditor(mockEditorC);
+            expect(Object.keys(eg.pathToEditor).length).toEqual(3);
+        });
+
+        it('which recursively deletes editors as expected', () => {
+            expect(Object.keys(eg.pathToEditor).length).toEqual(4);
+            eg.destroyEditor(mockEditorA);
+            expect(Object.keys(eg.pathToEditor).length).toEqual(0);
+        });
     });
 
     it('when instantiated has expected properties', () => {

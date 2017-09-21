@@ -24,6 +24,10 @@
 ## Brittle potential future bugs
 - [ ] Debug why fs.writeFileSync(mainPath, newText); is failing in asar
 
+## Code cleanliness
+- [ ] Remove references to windowInfo, make it simply an electron BrowserWindow
+  object since we are now using `{ id }` as ID
+
 ## Misc
 
 - [X] Full editor lifecycle event system for window / editor
