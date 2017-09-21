@@ -83,7 +83,7 @@ class Mounter {
                 const fullChannel = `${prefix}${channel}`;
                 listeningChannels.add(fullChannel);
                 return new IPCStream(fullChannel);
-            }
+            };
         };
 
         // Set up incoming channels
