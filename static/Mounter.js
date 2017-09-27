@@ -86,8 +86,9 @@ class Mounter {
             };
         };
 
-        // Set up incoming channels
-        this.ipc.on(`${prefix}update`, (ev, payload) => {
+        // Set up built-in incoming "update" channel
+        prepOpts(opts);
+        opts.on('update', (ev, payload) => {
             const newOpts = JSON.parse(payload);
             prepOpts(newOpts);
             this.adapter.update(tagInstance, newOpts);
@@ -107,7 +108,6 @@ class Mounter {
         }
 
         // Finally, mount the element where it belongs
-        prepOpts(opts);
         tagInstance = this.adapter.mount(mountLocation, tagname, opts);
 
         // And send a 'ready' ev so the main process knows

@@ -28,6 +28,8 @@
 - [ ] Remove references to windowInfo, make it simply an electron BrowserWindow
   object since we are now using `{ id }` as ID
 
+- [ ] Add tests for Mounter.js
+
 ## Misc
 
 - [X] Full editor lifecycle event system for window / editor
