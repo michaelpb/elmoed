@@ -40,16 +40,32 @@ describe('Riot.js Adaptor', () => {
         });
 
         it('which calls riot.js mount in turn as expected', () => {
-            const mountLocation = {};
+            const mountLocation = { querySelectorAll: () => [] };
             adaptor.mount(mountLocation, 'test-tag', fauxProps);
             expect(tagInstance.on).toHaveBeenCalled();
             expect(mountLocation.innerHTML).toBeTruthy();
             expect(mountLocation.innerHTML).toContain('<test-tag');
+            expect(mountLocation.innerHTML)
+                .toContain('data-elmoed-editor="test-tag"');
 
             const [evName, func] = tagInstance.on.calls.allArgs()[0];
             expect(evName).toEqual('before-unmount');
             func();
             expect(fauxProps.clearAll).toHaveBeenCalled();
+        });
+
+        it('which attempts to cleanup existing mounted elements', () => {
+            const tagList = [
+                { _tag: { unmount: () => {} } },
+            ];
+            const mountLocation = { querySelectorAll: () => tagList };
+            spyOn(mountLocation, 'querySelectorAll').and.callThrough();
+            spyOn(tagList[0]._tag, 'unmount');
+            adaptor.mount(mountLocation, 'test-tag', fauxProps);
+            expect(mountLocation.querySelectorAll).toHaveBeenCalled();
+            expect(mountLocation.querySelectorAll)
+                .toHaveBeenCalledWith('[data-elmoed-editor]');
+            expect(tagList[0]._tag.unmount).toHaveBeenCalled();
         });
     });
 
