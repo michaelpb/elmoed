@@ -10,6 +10,13 @@
 ## Critical bugs
 - [ ] Multiple windows mounts with conflicting channels for mount:ready etc, or
   opening the same file multiple times
+- [ ] Editors aren't correctly cleaned up: Need both of the following:
+    1. A `this._isDefunct` failsafe which simply ignores all events, and
+    issues a warning perhaps (just in-case there is a lingering reference
+    somewhere)
+    2. On destroying an editor, safely unhooking all events that editor
+    hooked, so that references aren't lingering anywhere
+
 
 ## Mousetrap based keyboard events
 - [ ] Mousetrap to register all key combos
