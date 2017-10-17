@@ -21,6 +21,7 @@ describe('WindowManager', () => {
         it('has expected properties', () => {
             expect(wm.windows).toEqual({});
             expect(wm.modules).toEqual({});
+            expect(wm.getWindowCount()).toEqual(0);
             expect(wm.adaptorPath).toEqual('');
         });
 
@@ -84,6 +85,7 @@ describe('WindowManager', () => {
             const windowID = wm.createWindow('test.txt');
             expect(electron.BrowserWindow).toHaveBeenCalled();
             expect(wm.windows[windowID]).toBeTruthy();
+            expect(wm.getWindowCount()).toEqual(1);
             const { browserWindow } = wm.windows[windowID];
             const expURI = `file://${wm.getIndexPath()}?windowID=${windowID}`;
             expect(browserWindow.loadURL).toHaveBeenCalledWith(expURI);
