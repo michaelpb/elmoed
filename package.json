@@ -1,6 +1,6 @@
 {
   "name": "elmoed",
-  "version": "0.0.32",
+  "version": "0.0.33",
   "author": "Michael B <michaelpb@gmail.com>",
   "description": "Electron Modular Editor - base framework for building editors in Electron.js",
   "contributors": [
