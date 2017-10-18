@@ -16,7 +16,9 @@
     somewhere)
     2. On destroying an editor, safely unhooking all events that editor
     hooked, so that references aren't lingering anywhere
-
+- [ ] Robust and consistent `chdir` scheme:
+    - Basically, whenever an editor window gains focus, it should ensure its in
+      the relevant dir
 
 ## Mousetrap based keyboard events
 - [ ] Mousetrap to register all key combos
